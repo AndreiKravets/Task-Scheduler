@@ -14,12 +14,13 @@ body .MuiModal-backdrop{
 .react-calendar{
     border: none;
     font-family:'Quicksand';
+    background: unset;
 }
 .react-calendar__month-view__days__day--weekend {
     color: black;
 }
 .react-calendar__tile--now {
-    background: #576CD8 !important;
+    background: black !important;
     color: white;
     border-radius: 3px;
 }
