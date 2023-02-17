@@ -60,6 +60,8 @@ const TaskForm = ({addNewTask, filterAllTask, filterActiveTask, filterDoneTask, 
             </Button>
             <Dialog
                 open={open}
+                maxWidth={'sm'}
+                fullWidth={true}
                 onClose={handleClose}
             >
                 <DialogTitle>

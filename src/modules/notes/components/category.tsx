@@ -9,7 +9,6 @@ const CategoryNotes = ({name, notes, icon, color}: ICategory) =>{
             <SvgIcon  sx={{color:color, fontSize:'45px', mb:4}}>{IconsArray[icon]}</SvgIcon>
             <Typography variant={"h5"} fontWeight={'600'}>
                 {name}
-
             </Typography>
             <Typography variant={'h6'} color={'#a6a1a1'}>
                 {notes.length} Notes

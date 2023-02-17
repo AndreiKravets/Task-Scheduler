@@ -5,6 +5,7 @@ import NotesStore from "../../store/notes";
 import {ICategory} from "../../store/notes";
 import {CategoryNotes} from "./components/category";
 import AddIcon from '@mui/icons-material/Add';
+import AddCategory from "./components/add-category";
 
 
 const dataNotes: ICategory[] = NotesStore.notesArray
@@ -24,11 +25,7 @@ const Notes = observer(() => {
                ))
                }
            </Box>
-            <Box display={'flex'} justifyContent={'flex-end'} mt={2}>
-                <Fab color="primary" aria-label="add" sx={{ml:'auto'}}>
-                    <AddIcon />
-                </Fab>
-            </Box>
+         <AddCategory />
 
         </>
     )
