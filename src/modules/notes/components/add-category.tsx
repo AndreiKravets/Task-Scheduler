@@ -1,14 +1,41 @@
 import React, {useState} from "react";
-import {Box, Dialog, DialogContent, DialogTitle, Fab, FormControl, TextField,InputLabel,Select,MenuItem} from "@mui/material";
+import {
+    Box,
+    Dialog,
+    DialogContent,
+    DialogTitle,
+    Fab,
+    FormControl,
+    TextField,
+    InputLabel,
+    Select,
+    MenuItem,
+    DialogActions, Button, SvgIcon
+} from "@mui/material";
+import Menu from '@mui/material/Menu';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import AddIcon from "@mui/icons-material/Add";
 import IconsArray from "./icons";
 import Colors from "./colors";
+import NotesStore from "../../../store/notes"
 
 const AddCategory = () => {
      const [open, setOpen] = useState(false)
      const [category, setCategory] = useState('')
      const [categoryIcon, setCategoryIcon] = useState(IconsArray[0])
+     const [categoryIconIndex, setCategoryIconIndex] = useState(0)
      const [colorIcon, setColorIcon] = useState(() => Colors[0])
+
+    function addNewCategory() {
+        setOpen(false)
+        const newCategory = {
+            name:category,
+            icon:categoryIconIndex,
+            color:colorIcon,
+            notes:[]
+        }
+        NotesStore.setNotesArray(newCategory)
+    }
 
     return(
         <>
@@ -26,7 +53,7 @@ const AddCategory = () => {
                     maxWidth={'sm'}
             >
                 <DialogTitle>
-                    Create New Category {category} {categoryIcon} {colorIcon}
+                    Create New Category
                 </DialogTitle>
                 <DialogContent>
 
@@ -36,47 +63,71 @@ const AddCategory = () => {
                         sx={{mt:1}}
                         onChange={(e) => setCategory(e.target.value)}
                     />
-                    <Box display='flex'>
-                    <FormControl sx={{ mt: 2, minWidth: 160, border:'none'}}>
-                        <InputLabel htmlFor="category-icon" variant='outlined'>Choose Icon</InputLabel>
-                        <Select
-                            autoFocus
-                            sx={{color:colorIcon}}
-                            value={categoryIcon}
-                            onChange={(e) => setCategoryIcon(e.target.value)}
-                            label="maxWidth"
-                            inputProps={{
-                                name: 'category-icon',
-                                id: 'category-icon',
-                            }}
-                        >
-                            {
-                                IconsArray.map((e, index) =>  <MenuItem value={index} sx={{color:colorIcon, justifyContent:'center'}} >{e}</MenuItem>)
-                            }
-
-                        </Select>
-                    </FormControl>
-
-                        <FormControl sx={{ mt: 2, minWidth: 160, border:'none'}}>
-                            <InputLabel htmlFor="color-icon" variant='outlined'>Choose Icon</InputLabel>
-                            <Select
-                                autoFocus
-                                value={colorIcon}
-                                onChange={(e) => setColorIcon(e.target.value)}
-                                label="maxWidth"
-                                inputProps={{
-                                    name: 'color-icon',
-                                    id: 'color-icon',
-                                }}
-                            >
-                                {
-                                    Colors.map((e, index) =>  <MenuItem value={e} sx={{color:colorIcon, justifyContent:'center'}} ><Box sx={{width:10, height:10, backgroundColor:e}}></Box></MenuItem>)
-                                }
-
-                            </Select>
-                        </FormControl>
-                    </Box>
                 </DialogContent>
+                <DialogActions sx={{p:'0 24px', pb:'20px', justifyContent:'space-between'}}>
+                    <Box display='flex' alignItems='center'>
+                        <PopupState variant="popover" popupId="demo-popup-menu">
+                            {(popupState) => (
+                                <>
+                                    <Button sx={{width:30, minWidth:30, height:30, backgroundColor:colorIcon, mr:1}} variant="contained" {...bindTrigger(popupState)}>
+                                    </Button>
+                                    <Menu {...bindMenu(popupState)}>
+                                        {
+                                            Colors.map((e, index) =>
+                                                <MenuItem key={e}
+                                                    onClick={
+                                                    () => {popupState.close();
+                                                        setColorIcon(e)}
+                                                }
+                                                          value={e} sx={
+                                                    {color:colorIcon,
+                                                        justifyContent:'center'}}
+                                                ><Box sx={{width:20, height:20, backgroundColor:e}}></Box>
+                                                </MenuItem>
+                                            )
+                                        }
+                                    </Menu>
+                                </>
+                            )}
+                        </PopupState>
+                        <PopupState variant="popover" popupId="demo-popup-menu">
+                            {(popupState) => (
+                                <>
+                                    <Button sx={{width:40, minWidth:40, height:40, backgroundColor:'unset', color:colorIcon}} variant='text' {...bindTrigger(popupState)}>
+                                       <SvgIcon sx={{fontSize:40}}>{categoryIcon}</SvgIcon>
+                                    </Button>
+                                    <Menu {...bindMenu(popupState)}>
+                                        {
+                                            IconsArray.map(
+                                                (e, index) =>
+                                                    <MenuItem key={index}
+                                                        onClick={
+                                                        () => {popupState.close();
+                                                            setCategoryIcon(e)
+                                                            setCategoryIconIndex(index)
+                                                        }
+                                                    }
+                                                              value={index}
+                                                              sx={{
+                                                                  color:colorIcon,
+                                                                  justifyContent:'center'
+                                                                 }} >
+                                                        {e}
+                                                    </MenuItem>)}
+                                    </Menu>
+                                </>
+                            )}
+                        </PopupState>
+                    </Box>
+                    <Box>
+                        <Button variant="outlined"
+                                onClick={() => {
+                                    addNewCategory();
+                                }}>
+                            Add
+                        </Button>
+                    </Box>
+                </DialogActions>
             </Dialog>
         </>
     )

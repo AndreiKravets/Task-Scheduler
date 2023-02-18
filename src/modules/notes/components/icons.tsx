@@ -18,7 +18,6 @@ import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 
 
  const IconsArray: React.ReactNode[] = [
-    <BallotIcon />,
      <AutoStoriesIcon />,
      <AccountBalanceWalletIcon />,
      <WorkIcon />,
@@ -35,5 +34,6 @@ import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
      <OndemandVideoIcon />,
      <VideogameAssetIcon />
 ]
+
 
 export default IconsArray

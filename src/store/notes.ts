@@ -105,8 +105,8 @@ export interface ICategory {
         }
     ]
 
-    setNotesArray(notes: any){
-        this.notesArray = notes
+    setNotesArray(note: ICategory){
+        this.notesArray = [...this.notesArray, note]
     }
 }
 

@@ -68,7 +68,7 @@ const TaskForm = ({addNewTask, filterAllTask, filterActiveTask, filterDoneTask, 
                         New task
                 </DialogTitle>
                 <DialogContent sx={{pb:0}}>
-                    <DialogContentText>
+
                         <TextField fullWidth
                                    label="Task name"
                                    value={taskItem.title}
@@ -80,7 +80,7 @@ const TaskForm = ({addNewTask, filterAllTask, filterActiveTask, filterDoneTask, 
                                    value={taskItem.body}
                                    onChange={e => setTaskItem({...taskItem, body: e.target.value})}
                         />
-                    </DialogContentText>
+
                 </DialogContent>
                 <DialogActions sx={{p:3}}>
                     <Button autoFocus onClick={handleClose}>
