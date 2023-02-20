@@ -10,17 +10,37 @@ class TodoStore {
 
     todosArray: Itask[] = []
 
+    filterTasks: null | boolean = null
 
-    setCountDate(carrentDate : string){
-      this.currentDate = carrentDate
-        console.log(carrentDate)
+    setCountDate(currentDate : string){
+      this.currentDate = currentDate
     }
 
-    setAllTasks (tasks: any){
-        this.todosArray = tasks
-        console.log(tasks)
+
+    addNewTask(taskItem: {title:string, body:string}){
+        const tempTask = {
+            id: this.todosArray.length ? this.todosArray[this.todosArray.length -1].id  +1 : 1,
+            status: true,
+            title: taskItem.title,
+            body: taskItem.body,
+            date: this.currentDate
+        }
+        this.todosArray = [...this.todosArray, {...tempTask}]
+    }
+    changeDoneTask (id: any) {
+        let tempTask = [...this.todosArray]
+        let index = tempTask.findIndex(e => e.id == id )
+        tempTask[index].status = !tempTask[index].status
+        this.todosArray = tempTask
+    }
+    deleteTask = (id: any) => {
+        const tempTask = this.todosArray.filter( e => e.id !== id)
+        this.todosArray = tempTask
     }
 
+    filteredTasks = (filter:null | boolean) =>{
+        this.filterTasks = filter
+    }
 }
 
 export default new TodoStore()

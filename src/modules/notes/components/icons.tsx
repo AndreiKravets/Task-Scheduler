@@ -35,5 +35,4 @@ import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
      <VideogameAssetIcon />
 ]
 
-
 export default IconsArray

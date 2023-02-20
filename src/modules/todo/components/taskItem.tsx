@@ -3,18 +3,11 @@ import Typography from '@mui/material/Typography';
 import CheckIcon from '@mui/icons-material/Check';
 import DeleteIcon from '@mui/icons-material/Delete';
 import {Box, Button, IconButton, Paper} from "@mui/material";
+import TodoStore from '../../../store/todo'
+import {ItaskItem} from "../models";
 
 
-interface ItaskItem {
-    title?: string,
-    children: React.ReactNode,
-    id?: any,
-    status:boolean,
-    changeDone:any,
-    deleteTask: any
-}
-
-const TaskItem = ({children, title,id, status, changeDone, deleteTask }: ItaskItem) => {
+const TaskItem = ({children, title,id, status}: ItaskItem) => {
 
 
     return (
@@ -29,10 +22,10 @@ const TaskItem = ({children, title,id, status, changeDone, deleteTask }: ItaskIt
                         {title}
                     </Typography>
                     <Box sx={{width: '20%', textAlign:'right', mt:'-8px'}}>
-                        <Button variant= {status ? "outlined" : undefined} sx={{minWidth:'20px', p:'5px 7px'}} onClick={() => changeDone(id)}>
+                        <Button variant= {status ? "outlined" : undefined} sx={{minWidth:'20px', p:'5px 7px'}} onClick={() => TodoStore.changeDoneTask(id)}>
                             {status ? <CheckIcon /> : 'done'}
                         </Button>
-                        <Button sx={{minWidth:'20px', p:'5px 7px', ml:1}} onClick={() => deleteTask(id)}>
+                        <Button sx={{minWidth:'20px', p:'5px 7px', ml:1}} onClick={() => TodoStore.deleteTask(id)}>
                             <DeleteIcon />
                         </Button>
                     </Box>

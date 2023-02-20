@@ -3,38 +3,23 @@ import {Box, Button, ButtonGroup, TextField} from "@mui/material";
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import TodoStore from '../../../store/todo'
+import {observer} from "mobx-react-lite";
 
 
 
-interface ItaskForm {
-    addNewTask: any,
-    filterAllTask: any,
-    filterActiveTask: any,
-    filterDoneTask: any,
-    filterStatus:any,
-    setStatus: any
-}
-
-const TaskForm = ({addNewTask, filterAllTask, filterActiveTask, filterDoneTask, filterStatus,setStatus }: ItaskForm) => {
+const TaskForm = observer( () => {
     const [open, setOpen] = useState(false);
     const [taskItem, setTaskItem] = useState({title:'', body:''})
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = () => {
-        setOpen(false);
-    };
 
 
 
     const buttons = [
-        <Button variant={filterStatus ==null ? "contained" : undefined} key="all" onClick={() => {filterAllTask(); setStatus(null)}}>All</Button>,
-        <Button variant={filterStatus ==true ? "contained" : undefined} key="active" onClick={() => {filterActiveTask(); setStatus(true)}}>Active</Button>,
-        <Button variant={filterStatus ==false ? "contained" : undefined} key="done" onClick={() => {filterDoneTask(); setStatus(false)}}>Done</Button>,
+        <Button variant={TodoStore.filterTasks == null ? "contained" : undefined} key="all" onClick={() => {TodoStore.filteredTasks(null)}}>All</Button>,
+        <Button variant={TodoStore.filterTasks == true ? "contained" : undefined} key="active" onClick={() => {TodoStore.filteredTasks(true)}}>Active</Button>,
+        <Button variant={TodoStore.filterTasks == false ? "contained" : undefined} key="done" onClick={() => {TodoStore.filteredTasks(false)}}>Done</Button>,
     ];
 
 
@@ -55,14 +40,14 @@ const TaskForm = ({addNewTask, filterAllTask, filterActiveTask, filterDoneTask, 
                     {buttons}
                 </ButtonGroup>
             </Box>
-            <Button variant="outlined"  onClick={handleClickOpen} sx={{height:'40px'}}>
+            <Button variant="outlined"  onClick={() => setOpen(true)} sx={{height:'40px'}}>
                 Add New Task
             </Button>
             <Dialog
                 open={open}
                 maxWidth={'sm'}
                 fullWidth={true}
-                onClose={handleClose}
+                onClose={() => setOpen(false)}
             >
                 <DialogTitle>
                         New task
@@ -83,12 +68,12 @@ const TaskForm = ({addNewTask, filterAllTask, filterActiveTask, filterDoneTask, 
 
                 </DialogContent>
                 <DialogActions sx={{p:3}}>
-                    <Button autoFocus onClick={handleClose}>
+                    <Button autoFocus onClick={() => setOpen(false)}>
                         Cancel
                     </Button>
                     <Button variant="outlined"
-                            onClick={() => {handleClose();
-                                addNewTask(taskItem);
+                            onClick={() => {setOpen(false);
+                                TodoStore.addNewTask(taskItem);
                                 setTaskItem({title: '', body: ''})
                             }}>
                         Ok
@@ -97,6 +82,6 @@ const TaskForm = ({addNewTask, filterAllTask, filterActiveTask, filterDoneTask, 
             </Dialog>
         </Box>
     )
-}
+})
 
 export default TaskForm
