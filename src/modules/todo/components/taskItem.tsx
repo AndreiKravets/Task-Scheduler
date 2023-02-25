@@ -7,6 +7,7 @@ import TodoStore from '../../../store/todo'
 import {ItaskItem} from "../models";
 
 
+
 const TaskItem = ({children, title,id, status}: ItaskItem) => {
 
 

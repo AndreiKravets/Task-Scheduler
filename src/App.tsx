@@ -8,7 +8,9 @@ import Dashboard from "./modules/dashboard";
 import themeStore from "./store/theme"
 import Themes from "./modules/themes";
 import {observer} from "mobx-react-lite";
-import Note from "./modules/notes";
+import Notes from "./modules/notes";
+import Note from "./modules/notes/note";
+import NoteDatails from "./modules/notes/note-deteils";
 
 
 const App = observer( ()=>  {
@@ -37,7 +39,13 @@ const App = observer( ()=>  {
                                     <Routes>
                                         <Route path='/' element={<Todo/>}/>
                                         <Route path='/themes' element={<Themes/>}/>
-                                        <Route path='/notes' element={<Note/>}/>
+                                        <Route path='notes'>
+                                           <Route index element={<Notes/>}/>
+                                            <Route path=':name'>
+                                                <Route index element={<Note/>}/>
+                                                <Route path=':note' element={<NoteDatails/>}/>
+                                            </Route>
+                                        </Route>
                                     </Routes>
 
                                 </Grid>

@@ -13,15 +13,14 @@ const Dashboard = observer(() => {
             borderBottom: '2px solid',
             borderColor: 'secondary.light',
             justifyContent: 'space-between',
-            pb: 3
+            pb: 2,
+            mb:1
         }}>
             <Typography
-                variant="h4"
+                variant="h5"
                 component="h2"
                 sx={{
-                    color: 'secondary.main',
-                    fontSize: '30px',
-                    fontWeight: 500
+                    color: 'secondary.main'
                 }}>
                 {TodosList.currentDate}
             </Typography>

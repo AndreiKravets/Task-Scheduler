@@ -1,18 +1,8 @@
 import {makeAutoObservable} from "mobx";
+import {ICategory, INote} from "../modules/notes/models";
+import { toJS } from 'mobx'
 
-export interface INote {
-    title: string,
-    description: string,
-    date: string
-}
 
-export interface ICategory {
-    name: string,
-    icon: number,
-    color: string,
-    notes: INote[],
-
-}
  class NotesStore{
     constructor() {
         makeAutoObservable(this)
@@ -37,16 +27,15 @@ export interface ICategory {
             color:'#FDBE7E',
             notes:[
                 {
-                    title:'title',
+                    title:'Wordpress',
                     description:'lorem ipsum',
                     date:'13/34/34'
                 },
                 {
-                    title:'title',
+                    title:'React',
                     description:'lorem ipsum',
                     date:'13/34/34'
                 },
-
             ]
         },
         {
@@ -105,9 +94,23 @@ export interface ICategory {
         }
     ]
 
+
+
     setNotesArray(note: ICategory){
         this.notesArray = [...this.notesArray, note]
     }
+
+    setNote(newNote: INote){
+        const temp = [...this.notesArray]
+        const indexCategory = temp.findIndex((e)=>{
+            return(
+            toJS(e).name.toLowerCase() == newNote.parent
+            )
+        })
+        temp[indexCategory].notes.push(newNote)
+        this.notesArray = temp
+    }
+
 }
 
 export default new NotesStore()
