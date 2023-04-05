@@ -10,7 +10,10 @@ import {NavLink} from "react-router-dom";
 
 
 const Notes = observer(() => {
-
+    console.log(JSON.parse(JSON.stringify(localStorage.getItem('notes'))))
+    useEffect(()=>{
+        NotesStore.initNotesArray()
+    },[])
     return (
         <>
            <Box display={'flex'} flexWrap={"wrap"} width={'auto'} sx={{m:'-5px'}}  >

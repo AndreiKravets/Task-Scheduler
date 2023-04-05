@@ -5,12 +5,8 @@ import {
     DialogContent,
     DialogTitle,
     Fab,
-    FormControl,
     TextField,
-    InputLabel,
-    Select,
-    MenuItem,
-    DialogActions, Button, SvgIcon
+    DialogActions, Button
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import NotesStore from "../../../store/notes"
@@ -28,7 +24,7 @@ const AddNote = (name:test) => {
         const newNote = {
             parent: name.name,
             title: note,
-            description: '',
+            body:[],
             date: new Date().toLocaleString()
         }
         NotesStore.setNote(newNote)

@@ -16,7 +16,6 @@ const Note: React.FunctionComponent<INotePage> = observer( () => {
     const [currentNote, setCurrentNote] = useState<ICategory | undefined>( )
     const { name } = useParams();
 
-    console.log(name)
     useEffect(() =>{
         if(name){
             const tempNote = NoteStore.notesArray.find((e: ICategory)=>{
@@ -31,10 +30,10 @@ const Note: React.FunctionComponent<INotePage> = observer( () => {
              loading
             </> :
         <>
-          <Paper variant={"outlined"} square={true} sx={{p:'22px', borderRadius:'10px',boxShadow:`4px 4px 14px -10px ${currentNote.color}`}}>
+          <Paper variant={"outlined"} square={true} sx={{p:'22px', borderRadius:'10px', boxShadow:`4px 4px 14px -10px ${currentNote.color}`}}>
             <Box display={'flex'} alignItems={'center'} mb={2}>
-                <SvgIcon  sx={{color:currentNote.color, fontSize:'30px', mr:1}}>{IconsArray[currentNote.icon]}</SvgIcon>
-                <Typography variant={"h6"} fontWeight={'600'} textTransform={'uppercase'} color={currentNote.color} sx={{fontWeight:'600'}}>
+                <SvgIcon  sx={{color:currentNote.color, fontSize:'35px', mr:1}}>{IconsArray[currentNote.icon]}</SvgIcon>
+                <Typography variant={"h5"} fontWeight={'600'} textTransform={'uppercase'} color={currentNote.color} sx={{fontWeight:'600'}}>
                     {name}
                 </Typography>
             </Box>

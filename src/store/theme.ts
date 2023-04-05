@@ -15,3 +15,4 @@ class ThemeStore {
 }
 
 export default new ThemeStore()
+

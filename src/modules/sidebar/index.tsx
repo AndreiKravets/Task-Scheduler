@@ -47,7 +47,7 @@ const Sidebar = observer( () => {
                         </ListItemIcon>
                         <ListItemText
                             primary={item.label}
-                            primaryTypographyProps={{fontSize: 14}}
+                            primaryTypographyProps={{fontSize: 17, fontWeight:'500'}}
                         />
                     </ListItemButton>
                 </NavLink>

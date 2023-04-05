@@ -17,10 +17,11 @@ const Dashboard = observer(() => {
             mb:1
         }}>
             <Typography
-                variant="h5"
+                variant="h4"
                 component="h2"
                 sx={{
-                    color: 'secondary.main'
+                    color: 'secondary.main',
+                    fontWeight:'500'
                 }}>
                 {TodosList.currentDate}
             </Typography>
@@ -40,8 +41,9 @@ const Dashboard = observer(() => {
                         fontWeight:'600'
                     }}>AK</Avatar>
                 <Typography
-                    variant='h5'
+                    variant='h4'
                     component='p'
+                    sx={{fontWeight:'500'}}
                     color={'secondary.main'}>
                     Andrey Kravets
                 </Typography>
