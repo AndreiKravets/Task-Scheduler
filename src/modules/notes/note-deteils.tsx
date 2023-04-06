@@ -60,8 +60,6 @@ const NoteDatails: React.FunctionComponent<INotePage> = observer(() => {
 
                     <NoteBody body={currentNote.notes[indexNote].body} color={currentNote.color} category={name} name={currentNote.notes[indexNote].title} />
 
-
-
                     {currentNote.notes[indexNote - 1] ?
                         <NavLink to={`/notes/${name}/${currentNote.notes[indexNote - 1].title.toLowerCase()}`}>
                             <Typography variant={'h6'}>

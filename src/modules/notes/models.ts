@@ -5,7 +5,7 @@ export interface IBodyItem {
 }
 
 export interface IBody{
-    body: IBodyItem[],
+    body: string,
     color: string,
     category: string | undefined,
     name: string,
@@ -13,7 +13,7 @@ export interface IBody{
 export interface INote {
     parent:string | undefined,
     title: string,
-    body: IBodyItem[],
+    body: string,
     date: string
 }
 export interface ICategory {

@@ -24,7 +24,7 @@ const AddNote = (name:test) => {
         const newNote = {
             parent: name.name,
             title: note,
-            body:[],
+            body:'',
             date: new Date().toLocaleString()
         }
         NotesStore.setNote(newNote)

@@ -10,7 +10,7 @@ import {NavLink} from "react-router-dom";
 
 
 const Notes = observer(() => {
-    console.log(JSON.parse(JSON.stringify(localStorage.getItem('notes'))))
+    console.log((localStorage.getItem('notes')))
     useEffect(()=>{
         NotesStore.initNotesArray()
     },[])
