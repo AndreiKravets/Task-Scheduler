@@ -1,72 +1,72 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&family=Teko:wght@300;400;500;600;700&display=swap');
-html, #root, body{
-    min-height: 100vh;
-}
-body{
-    margin: 0;
+*{
+  padding: 0;
+  margin: 0;
+  font-family: 'Quicksand';
+  box-sizing: border-box;
 }
 a{
-    text-decoration: none;
+  text-decoration:none;
 }
 body .MuiModal-backdrop{
-    background-color: rgba(43, 44, 64, 0.5);
+  background-color: rgba(43, 44, 64, 0.5);
 }
 .react-calendar{
-    border: none;
-    font-family:'Quicksand';
-    background: unset;
+  border: none;
+  font-family:'Quicksand';
+  background: unset;
 }
 .react-calendar__month-view__days__day--weekend {
-    color: black;
+  color: black;
 }
 .react-calendar__tile--now {
-    background: black !important;
-    color: white;
-    border-radius: 3px;
+  background: black !important;
+  color: white;
+  border-radius: 3px;
 }
 .react-calendar__tile--active:enabled:hover, .react-calendar__tile--active:enabled:focus {
-    background: #bcbcbc;
-    border-radius: 3px;
+  background: #bcbcbc;
+  border-radius: 3px;
 }
 .react-calendar__month-view__weekdays {
-    text-align: center;
-    text-transform: uppercase;
-    font-weight: normal;
-    font-size: 0.75em;
-    margin-bottom: 5px;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: normal;
+  font-size: 0.75em;
+  margin-bottom: 5px;
 }
 
 .react-calendar__month-view__weekdays abbr[title]{
-    text-decoration: none !important;
+  text-decoration: none !important;
 }
 .react-calendar button {
-    font-size: 14px;
+  font-size: 14px;
 }
 .react-calendar__tile--active {
-    background: #bcbcbc;
-    color: white;
-    border-radius: 3px;
+  background: #bcbcbc;
+  color: white;
+  border-radius: 3px;
 }
 
 .react-calendar__navigation {
-    height: 20px;
+  height: 20px;
 }
 .react-calendar__tile--now:enabled:hover .react-calendar__tile--now:enabled:focus {
-    background: #3049d0;
+  background: #3049d0;
 }
 .react-calendar__navigation__prev2-button, .react-calendar__navigation__next2-button{
-    display: none !important;
-    font-size: 22px;
+  display: none !important;
+  font-size: 22px;
 }
 .react-calendar__navigation__label__labelText{
-    font-size: 16px;
+  font-size: 16px;
 }
 .react-calendar {
-    width: 100%;
+  width: 100%;
 }
 
 .menu_link.active .MuiButtonBase-root{
-    background-color: #9fa8da;
-    color: white;
-    border-radius: 4px;
+  background-color: #9fa8da;
+  color: white;
+  border-radius: 4px;
 }

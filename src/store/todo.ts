@@ -1,46 +1,55 @@
-import {makeAutoObservable} from "mobx";
-import {Itask} from "../modules/todo/models";
+import { makeAutoObservable, toJS } from "mobx"
+import { ItaskItem } from "../modules/todo/models"
 
 class TodoStore {
-    constructor() {
-        makeAutoObservable(this)
+  constructor() {
+    makeAutoObservable(this)
+  }
+
+  currentDate = new Date().toDateString()
+
+  filterTasks: null | boolean = null
+  
+  todosArray: ItaskItem[] = (localStorage.getItem('todo')) == null ? [] :
+  JSON.parse(localStorage.getItem('todo') || '')
+
+
+  setCurrentDate(date: string){
+     this.currentDate = date
+     console.log(date);
+  }
+
+  addNewTask(taskItem: {title:string, body:string}) {
+    const newTask:ItaskItem = {
+      ...taskItem,
+      status: true,
+      id: Date.now(),
+      date: this.currentDate
     }
+    this.todosArray.push(newTask)
+    localStorage.setItem('todo', JSON.stringify(this.todosArray))
+  }
 
-    currentDate = ''
-
-    todosArray: Itask[] = []
-
-    filterTasks: null | boolean = null
-
-    setCountDate(currentDate : string){
-      this.currentDate = currentDate
+  changeStatusTask(id:number|undefined){
+  this.todosArray.map((e)=>{
+    if(e.id == id){
+      e.status = !e.status
     }
+  })
+  localStorage.setItem('todo', JSON.stringify(this.todosArray))
+  }
 
+  deleteTask(id:number|undefined) {
+    this.todosArray = this.todosArray.filter(e => e.id !== id)
+    localStorage.setItem('todo', JSON.stringify(this.todosArray))
+  }
 
-    addNewTask(taskItem: {title:string, body:string}){
-        const tempTask = {
-            id: this.todosArray.length ? this.todosArray[this.todosArray.length -1].id  +1 : 1,
-            status: true,
-            title: taskItem.title,
-            body: taskItem.body,
-            date: this.currentDate
-        }
-        this.todosArray = [...this.todosArray, {...tempTask}]
-    }
-    changeDoneTask (id: any) {
-        let tempTask = [...this.todosArray]
-        let index = tempTask.findIndex(e => e.id == id )
-        tempTask[index].status = !tempTask[index].status
-        this.todosArray = tempTask
-    }
-    deleteTask = (id: any) => {
-        const tempTask = this.todosArray.filter( e => e.id !== id)
-        this.todosArray = tempTask
-    }
-
-    filteredTasks = (filter:null | boolean) =>{
-        this.filterTasks = filter
-    }
+  filteredTasks(filter:null | boolean){
+    this.filterTasks = filter
+    console.log(this.filterTasks);
+    
+  }
 }
 
-export default new TodoStore()
+const todoStore = new TodoStore()
+export { todoStore } 

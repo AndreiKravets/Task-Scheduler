@@ -1,6 +1,5 @@
 import React from "react";
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
-import BallotIcon from "@mui/icons-material/Ballot";
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import WorkIcon from '@mui/icons-material/Work';
 import LocalLibraryIcon from '@mui/icons-material/LocalLibrary';

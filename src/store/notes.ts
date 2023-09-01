@@ -1,57 +1,61 @@
-import {makeAutoObservable} from "mobx";
-import {IBodyItem, ICategory, INote} from "../modules/notes/models";
+import { makeAutoObservable } from "mobx";
 import { toJS } from 'mobx'
-import notes from "../modules/notes";
+import { IBody, ICategory, INote } from "../modules/notes/models";
 
 
+class NotesStore {
+  constructor() {
+    makeAutoObservable(this)
+  }
 
- class NotesStore{
-    constructor() {
-        makeAutoObservable(this)
-    }
+  notesArray: ICategory[] = JSON.parse(localStorage.getItem('notes') || '[]')
 
-    notesArray: ICategory[] = []
+  addLocalStorage() {
+    localStorage.setItem('notes', JSON.stringify(this.notesArray))
+  }
 
-     markdownEditor:string = ''
+  addNoteCategory(note: ICategory) {
+    this.notesArray.push(note)
+    this.addLocalStorage()
+  }
 
-     setMarkdownEditor(val:string){
-        this.markdownEditor = val
-     }
-   initNotesArray(){
-       (localStorage.getItem('notes')) == null ?
-           localStorage.setItem('notes', '[{"name":"","icon":0,"color":"#80A3FF","notes":[]}]')
-           :
-        this.notesArray = JSON.parse(localStorage.getItem('notes') || '')
-   }
+  delCategory(categoryUrl: string) {
+    this.notesArray = this.notesArray.filter((e) => e.categoryUrl !== categoryUrl)
+    this.addLocalStorage()
+  }
 
-    setNotesArray(note: ICategory){
-        this.notesArray = [...this.notesArray, note]
-        localStorage.setItem('notes', JSON.stringify(this.notesArray))
-    }
+  addNote(newNote: INote) {
+    this.notesArray.map((e) => e.categoryUrl === newNote.parent ? e.notes.push(newNote) : false)
+    this.addLocalStorage()
+  }
 
-    setNote(newNote: INote){
-        const temp = [...this.notesArray]
-        const indexCategory = temp.findIndex((e)=>{
-            return(
-            toJS(e).name.toLowerCase() == newNote.parent
-            )
-        })
-        temp[indexCategory].notes.push(newNote)
-        this.notesArray = temp
-        localStorage.setItem('notes', JSON.stringify(this.notesArray))
-    }
+  delNote(categoryUrl: string, noteUrl: string) {
+    this.notesArray.map(
+      (categoryNote) => categoryNote.categoryUrl == categoryUrl
+        ?
+        categoryNote.notes = categoryNote.notes.filter((note) => (note.noteUrl !== noteUrl))
+        :
+        false)
+    this.addLocalStorage()
+  }
 
-    saveNote(category:string | undefined, name:string, body:string){
-       const newNote = [...this.notesArray]
-        newNote.map((e:ICategory, indexCategory:number) => e.name.toLowerCase() == category ?
-            e.notes.map((e:INote, indexNote:number) => e.title == name ?
-                newNote[indexCategory].notes[indexNote].body = body : '')
-            : '')
-        this.notesArray = newNote
-        localStorage.setItem('notes', JSON.stringify(this.notesArray))
-    }
-
-
+  saveNote({ category, name, body }: IBody) {
+    this.notesArray.map(
+      (categoryNote) => (categoryNote.categoryUrl == category
+        ?
+        categoryNote.notes.map(
+          (note) => (note.noteUrl == name
+            ?
+            note.body = body
+            :
+            false)
+        )
+        :
+        false)
+    )
+    this.addLocalStorage()
+  }
 }
 
-export default new NotesStore()
+const notesStore = new NotesStore()
+export { notesStore }

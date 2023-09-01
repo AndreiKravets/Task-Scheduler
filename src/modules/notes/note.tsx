@@ -1,59 +1,45 @@
-import React, {useEffect, useState} from "react";
-import {NavLink, useParams} from 'react-router-dom';
-import NoteStore from '../../store/notes';
-import {ICategory, INote} from './models';
-import {observer} from "mobx-react-lite";
+import { Box, Paper, SvgIcon, Typography } from '@mui/material';
+import { NavLink, useParams } from 'react-router-dom';
+import { notesStore } from '../../store/notes';
+import Colors from './components/colors';
+import AddNote from './components/add-note';
+import { INote } from './models';
+import { observer } from 'mobx-react';
 import { toJS } from 'mobx'
-import {Box, Paper, SvgIcon, Typography} from "@mui/material";
-import IconsArray from "./components/icons";
-import AddNote from "./components/add-note";
-
-export interface INotePage{}
-const Note: React.FunctionComponent<INotePage> = observer( () => {
+import { Delete } from '@mui/icons-material';
 
 
-    const [noteName, setNoteName] = useState('')
-    const [currentNote, setCurrentNote] = useState<ICategory | undefined>( )
-    const { name } = useParams();
+const Note = observer(() => {
 
-    useEffect(() =>{
-        if(name){
-            const tempNote = NoteStore.notesArray.find((e: ICategory)=>{
-                return  e.name.toLowerCase() == name
-            })
-            setCurrentNote(toJS(tempNote))
-        }
-    }, [NoteStore.notesArray])
+  const { noteCategory } = useParams()
+  const currentCategory = toJS(notesStore.notesArray).filter((e) => e.categoryUrl == noteCategory)[0]
 
-    return(
-        currentNote == undefined ? <>
-             loading
-            </> :
-        <>
-          <Paper variant={"outlined"} square={true} sx={{p:'22px', borderRadius:'10px', boxShadow:`4px 4px 14px -10px ${currentNote.color}`}}>
-            <Box display={'flex'} alignItems={'center'} mb={2}>
-                <SvgIcon  sx={{color:currentNote.color, fontSize:'35px', mr:1}}>{IconsArray[currentNote.icon]}</SvgIcon>
-                <Typography variant={"h5"} fontWeight={'600'} textTransform={'uppercase'} color={currentNote.color} sx={{fontWeight:'600'}}>
-                    {name}
+  return (
+    <Paper variant={'outlined'} square={true} sx={{ p: '22px', borderRadius: '10px', boxShadow: `4px 4px 14px -10px ${currentCategory.color}` }}>
+      <Box display={'flex'} alignItems={'center'} mb={2}>
+        <Typography color={currentCategory.color} variant={'h5'} textTransform={'uppercase'} fontWeight={'600'}>
+          {currentCategory.name}
+        </Typography>
+      </Box>
+      {
+        currentCategory.notes.map((e: INote) => (
+          <Box position={'relative'}>
+            <NavLink key={e.title} to={`./${e.noteUrl}`}>
+              <Paper variant={'outlined'} sx={{ p: 1, pl: 2, mb: 1, borderRadius: '6px' }}>
+                <Typography variant={'h6'}>
+                  {e.title}
                 </Typography>
-            </Box>
-              {
-                  currentNote.notes.map((e:INote)=>{
-                      return(
-                          <NavLink to={`/notes/${name}/${e.title.toLowerCase()}`} key={e.title}>
-                      <Paper key={e.title} variant={"outlined"} square={true} sx={{p:1, pl:2, mb:1, borderRadius:'6px'}}>
-                          <Typography variant={'h6'}>
-                              {e.title}
-                          </Typography>
-                      </Paper>
-                          </NavLink>
-                      )
-                  })
-              }
-              <AddNote name={name} />
-          </Paper>
-        </>
-    )
+              </Paper>
+            </NavLink>
+            <SvgIcon onClick={() => notesStore.delNote(currentCategory.categoryUrl, e.noteUrl)}
+              sx={{ color: '#a6a1a1', fontSize: '25px', position: 'absolute',top:'13px', right: '15px' }}>
+              <Delete />
+            </SvgIcon>
+          </Box>
+        ))
+      }
+      <AddNote />
+    </Paper>
+  )
 })
-
 export default Note

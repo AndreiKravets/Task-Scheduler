@@ -1,75 +1,74 @@
-import React, {useState} from "react";
-import {
-    Box,
-    Dialog,
-    DialogContent,
-    DialogTitle,
-    Fab,
-    TextField,
-    DialogActions, Button
-} from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import NotesStore from "../../../store/notes"
+import { Add } from '@mui/icons-material';
+import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Fab, TextField } from '@mui/material';
+import React, { useState } from 'react';
+import { INote } from '../models';
+import { notesStore } from '../../../store/notes';
+import { useParams } from 'react-router-dom';
 
 
-interface test {
-    name: string|undefined
-}
-const AddNote = (name:test) => {
-    const [open, setOpen] = useState(false)
-    const [note, setNote] = useState('')
 
-    function addNewNote() {
-        setOpen(false)
-        const newNote = {
-            parent: name.name,
-            title: note,
-            body:'',
-            date: new Date().toLocaleString()
-        }
-        NotesStore.setNote(newNote)
+const AddNote = () => {
+ 
+  const { noteCategory } = useParams()
+
+  const [open, setOpen] = useState(false)
+  const [note, setNote] = useState('')
+
+  function addNewNote(){
+    setOpen(false)
+    const noteUrl = note.trim().replaceAll(' ', '-').toLowerCase()
+    console.log(noteUrl);
+    
+    const newNote:INote = {
+      parent: noteCategory||'',
+      noteUrl:noteUrl,
+      title: note,
+      body:'',
+      date: new Date().toLocaleString()
     }
+    notesStore.addNote(newNote)
+  }
 
-    return(
-        <>
-            <Box onClick={() => setOpen(true)}
-                 display={'flex'}
-                 justifyContent={'flex-end'}
-                 mt={2}>
-                <Fab color="primary" aria-label="add" sx={{ml:'auto'}}>
-                    <AddIcon />
-                </Fab>
-            </Box>
-            <Dialog open={open}
-                    onClose={() => setOpen(false)}
-                    fullWidth={true}
-                    maxWidth={'sm'}
-            >
-                <DialogTitle>
-                    Create New Note
-                </DialogTitle>
-                <DialogContent>
+  return (
+    <>
+      <Box
+        display={'flex'}
+        justifyContent={'flex-end'}
+        mt={2}
+      >
+        <Fab color='primary' aria-label='add'
+          onClick={() => setOpen(true)}
+        >
+          <Add />
+        </Fab>
+      </Box>
 
-                    <TextField
-                        fullWidth
-                        label={'Create Note'}
-                        sx={{mt:1}}
-                        onChange={(e) => setNote(e.target.value)}
-                    />
-                </DialogContent>
-                <DialogActions sx={{p:'0 24px', pb:'20px'}}>
-                    <Box>
-                        <Button variant="outlined"
-                                onClick={() => {
-                                    addNewNote();
-                                }}>
-                            Add
-                        </Button>
-                    </Box>
-                </DialogActions>
-            </Dialog>
-        </>
-    )
+      <Dialog open={open}
+        onClose={() => setOpen(false)}
+        fullWidth
+        maxWidth={'sm'}
+      >
+        <DialogTitle>
+          Create New Note
+        </DialogTitle>
+        <DialogContent>
+          <TextField
+            fullWidth
+            label={'Add Note'}
+            margin='dense'
+            onChange={e => setNote(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions sx={{p:'0 24px', pb:'20px'}}>
+          <Button variant="outlined"
+            onClick={() => {
+              addNewNote()
+            }}>
+            Add
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </>
+  )
 }
-
 export default AddNote

@@ -1,5 +1,5 @@
 import {createTheme} from "@mui/material";
-import {grey, indigo, orange, purple, yellow} from "@mui/material/colors";
+import {grey, indigo, orange, purple} from "@mui/material/colors";
 
 const purpleTheme = createTheme({
     palette: {
@@ -12,7 +12,6 @@ const purpleTheme = createTheme({
         },
         background: {
             default: purple[50],
-
         },
     },
     typography: {
@@ -20,6 +19,7 @@ const purpleTheme = createTheme({
         fontSize: 14
     },
 })
+
 const blackTheme = createTheme({
     palette: {
         primary: {
